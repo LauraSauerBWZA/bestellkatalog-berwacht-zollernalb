@@ -1,0 +1,1126 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bergwacht Zollernalb &mdash; Shop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+/* ===== Design Tokens ===== */
+:root {
+  --accent: #0b7a55;
+  --accent-hover: #09684a;
+  --accent-light: #e6f5ef;
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --surface-2: #f5f5f7;
+  --ink: #1d1d1f;
+  --ink-2: #424245;
+  --ink-3: #6e6e73;
+  --hairline: #e5e5ea;
+  --radius-sm: 10px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,.06);
+  --shadow-md: 0 8px 30px rgba(0,0,0,.10);
+  --shadow-lg: 0 20px 50px rgba(0,0,0,.15);
+  --nav-h: 52px;
+  --orange: #f59100;
+  --rot: #e60005;
+}
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', Helvetica, Arial, sans-serif;
+  background: var(--bg); color: var(--ink); line-height: 1.47;
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+}
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+input, select { font: inherit; color: inherit; }
+::selection { background: color-mix(in oklch, var(--accent) 25%, transparent); }
+
+/* ===== Chrome / Nav ===== */
+.chrome {
+  position: sticky; top: 0; z-index: 90;
+  backdrop-filter: saturate(180%) blur(22px);
+  -webkit-backdrop-filter: saturate(180%) blur(22px);
+  background: rgba(250,250,250,.78);
+  border-bottom: 1px solid var(--hairline);
+  height: var(--nav-h);
+}
+.chrome-inner {
+  max-width: 1180px; margin: 0 auto; height: 100%;
+  display: flex; align-items: center; gap: 18px;
+  padding: 0 22px; font-size: 13px; color: var(--ink-2);
+}
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 600; color: var(--ink); letter-spacing: -.01em; white-space: nowrap; }
+.brand img { height: 30px; display: block; }
+.chrome-right { display: flex; align-items: center; gap: 14px; margin-left: auto; }
+.bag-trigger { position: relative; display: flex; align-items: center; gap: 6px; padding: 6px; }
+.bag-count {
+  background: var(--accent); color: #fff; font-size: 10px; font-weight: 700;
+  min-width: 16px; height: 16px; padding: 0 5px; border-radius: 10px;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+
+/* ===== Hero ===== */
+.hero {
+  padding: 60px 22px 20px; text-align: center;
+  max-width: 860px; margin: 0 auto;
+}
+.eyebrow { font-size: 13px; color: var(--accent); font-weight: 600; letter-spacing: .02em; margin-bottom: 12px; }
+.hero h1 {
+  font-size: clamp(36px, 5.5vw, 60px); line-height: 1.06; letter-spacing: -.035em;
+  font-weight: 700; margin-bottom: 14px;
+}
+.hero h1 .grad {
+  background: linear-gradient(90deg, #0b7a55, #1fa97a);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hero p { font-size: clamp(16px, 1.5vw, 19px); color: var(--ink-2); max-width: 580px; margin: 0 auto; letter-spacing: -.005em; }
+
+/* Feature strip */
+.features {
+  max-width: 1180px; margin: 24px auto 40px; padding: 0 22px;
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+}
+.feature {
+  background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-md);
+  padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+}
+.feature .icon {
+  width: 34px; height: 34px; border-radius: 10px; background: var(--surface-2);
+  display: flex; align-items: center; justify-content: center; color: var(--accent); flex-shrink: 0;
+}
+.feature .txt { font-size: 13px; line-height: 1.35; color: var(--ink-2); }
+.feature .txt b { color: var(--ink); font-weight: 600; display: block; }
+
+/* ===== Onboard card ===== */
+.onboard-wrap { max-width: 680px; margin: 0 auto 50px; padding: 0 22px; }
+.onboard {
+  background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-lg);
+  padding: 40px; box-shadow: var(--shadow-sm);
+}
+.onboard h2 { font-size: 24px; letter-spacing: -.02em; font-weight: 600; margin-bottom: 6px; }
+.onboard .sub { color: var(--ink-3); font-size: 15px; margin-bottom: 28px; }
+.field { margin-bottom: 16px; }
+.field label { display: block; font-size: 12px; color: var(--ink-3); margin-bottom: 6px; font-weight: 500; letter-spacing: .01em; }
+.field input, .field select {
+  width: 100%; padding: 14px 16px; border: 1px solid var(--hairline); border-radius: 12px;
+  background: var(--surface-2); font-size: 16px; letter-spacing: -.01em;
+  transition: border-color .2s, background .2s, box-shadow .2s;
+}
+.field input:focus, .field select:focus {
+  outline: none; border-color: var(--accent); background: #fff;
+  box-shadow: 0 0 0 4px color-mix(in oklch, var(--accent) 15%, transparent);
+}
+.row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* Segmented control */
+.segmented {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  background: var(--surface-2); border-radius: 12px; padding: 4px; gap: 2px;
+  border: 1px solid var(--hairline);
+}
+.seg {
+  padding: 12px 10px; border-radius: 9px; font-size: 13px; color: var(--ink-2);
+  text-align: center; line-height: 1.25; transition: all .2s; cursor: pointer;
+}
+.seg.active { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.06), 0 0 0 .5px rgba(0,0,0,.04); font-weight: 600; }
+.seg:hover:not(.active) { color: var(--ink); }
+
+/* Primary / accent buttons */
+.btn-primary {
+  width: 100%; padding: 14px 22px; margin-top: 22px;
+  background: var(--ink); color: #fff; border: 0;
+  border-radius: 999px; font-size: 15px; font-weight: 500; letter-spacing: -.01em;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  transition: transform .15s, background .2s; cursor: pointer;
+}
+.btn-primary:hover { background: #000; }
+.btn-primary:active { transform: scale(.985); }
+.btn-primary:disabled { background: #c7c7cc; color: #fff; cursor: not-allowed; }
+.btn-accent { background: var(--accent); }
+.btn-accent:hover { background: var(--accent-hover); }
+
+/* Rules accordion */
+.rules-toggle {
+  margin-top: 18px; display: flex; align-items: center; justify-content: space-between;
+  width: 100%; padding: 14px 18px; border: 1px solid var(--hairline);
+  border-radius: 14px; background: var(--surface-2); font-size: 14px; color: var(--ink-2); cursor: pointer;
+}
+.rules-toggle:hover { color: var(--ink); }
+.rules-table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 13px; }
+.rules-table th, .rules-table td { text-align: left; padding: 12px 14px; border-bottom: 1px solid var(--hairline); vertical-align: top; }
+.rules-table th { font-weight: 600; color: var(--ink); font-size: 12px; letter-spacing: .02em; text-transform: uppercase; }
+.rules-table td:first-child { font-weight: 600; color: var(--ink); }
+.rules-table td { color: var(--ink-2); }
+.privacy {
+  margin-top: 18px; padding: 14px 16px; border-radius: 12px; background: var(--surface-2);
+  color: var(--ink-3); font-size: 12px; line-height: 1.55; display: flex; gap: 10px; align-items: flex-start;
+}
+
+/* ===== Catalog ===== */
+.catalog { max-width: 1180px; margin: 0 auto; padding: 0 22px 120px; display: none; }
+.catalog.active { display: block; }
+.cat-head { padding: 30px 0 22px; }
+.cat-who { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink-3); margin-bottom: 6px; }
+.cat-who b { color: var(--ink); font-weight: 600; }
+.cat-head h2 { font-size: clamp(28px, 4vw, 44px); letter-spacing: -.03em; font-weight: 700; line-height: 1.05; }
+.cat-head .sub { color: var(--ink-3); font-size: 16px; margin-top: 4px; }
+
+/* Pill filters */
+.pills {
+  display: flex; gap: 8px; flex-wrap: wrap; padding: 16px 0 26px;
+  position: sticky; top: var(--nav-h); z-index: 50;
+  background: rgba(250,250,250,.88); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--hairline); margin-bottom: 28px;
+}
+.pill {
+  padding: 8px 18px; border-radius: 999px; font-size: 13px; color: var(--ink-2);
+  background: var(--surface); border: 1px solid var(--hairline);
+  transition: all .18s; cursor: pointer; white-space: nowrap;
+}
+.pill:hover { color: var(--ink); border-color: #c7c7cc; }
+.pill.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+.pill-sep { width: 1px; background: var(--hairline); margin: 0 4px; align-self: stretch; }
+
+/* Grid */
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+/* Tile */
+.tile {
+  background: var(--surface); border: 1px solid var(--hairline); border-radius: var(--radius-lg);
+  overflow: hidden; display: flex; flex-direction: column;
+  transition: transform .3s cubic-bezier(.2,.7,.2,1), box-shadow .3s, border-color .2s;
+}
+.tile:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: #d2d2d7; }
+.tile.in-bag { border-color: var(--accent); }
+.tile.in-bag::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  box-shadow: 0 0 0 2px color-mix(in oklch, var(--accent) 30%, transparent);
+}
+.thumb {
+  aspect-ratio: 1/1; background: var(--surface-2); position: relative;
+  display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+.thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.thumb .placeholder {
+  width: 100%; height: 100%;
+  background-image: repeating-linear-gradient(45deg, rgba(0,0,0,.025) 0 8px, transparent 8px 16px),
+    linear-gradient(180deg, #f2f2f4, #ededf0);
+  display: flex; align-items: center; justify-content: center;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 11px; color: var(--ink-3);
+  letter-spacing: .04em; text-transform: uppercase;
+}
+.thumb .tag {
+  position: absolute; top: 12px; left: 12px; background: rgba(255,255,255,.9);
+  backdrop-filter: blur(6px); padding: 4px 10px; border-radius: 999px;
+  font-size: 11px; font-weight: 600; color: var(--ink-2); letter-spacing: .02em;
+}
+.tile-body { padding: 18px 18px 16px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.tile-kick { font-size: 11px; color: var(--ink-3); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+.tile-name { font-size: 16px; font-weight: 600; letter-spacing: -.015em; line-height: 1.25; }
+.tile-name .gender { color: var(--ink-3); font-weight: 400; }
+.tile-desc { font-size: 13px; color: var(--ink-3); line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.tile-price { font-size: 15px; font-weight: 600; margin-top: auto; }
+.tile-actions { display: flex; gap: 8px; margin-top: 6px; }
+.tile-quick {
+  flex: 1; padding: 10px 14px; border-radius: 999px; border: 1px solid var(--hairline);
+  font-size: 13px; color: var(--ink); background: var(--surface-2); transition: background .2s;
+}
+.tile-quick:hover { background: #ebebef; border-color: #c7c7cc; }
+.tile-add {
+  padding: 10px 14px; border-radius: 999px; background: var(--accent); color: #fff;
+  font-size: 13px; font-weight: 500; display: inline-flex; align-items: center; gap: 6px;
+  transition: background .2s, transform .15s;
+}
+.tile-add:hover { background: var(--accent-hover); }
+.tile-add:active { transform: scale(.97); }
+
+/* ===== Quick-Look Modal ===== */
+.backdrop { display: none; }
+.backdrop.open {
+  display: flex; position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,.35); backdrop-filter: blur(6px);
+  align-items: center; justify-content: center; padding: 20px;
+  animation: fadeIn .2s;
+}
+@keyframes fadeIn { from { opacity: 0; } }
+@keyframes popIn { from { transform: translateY(20px) scale(.98); opacity: 0; } }
+.sheet {
+  background: #fff; border-radius: 28px; width: min(920px, 100%);
+  display: grid; grid-template-columns: 1fr 1fr; overflow: hidden;
+  max-height: 90vh; animation: popIn .3s cubic-bezier(.2,.7,.2,1);
+  box-shadow: 0 40px 80px -20px rgba(0,0,0,.35); position: relative;
+}
+.sheet-photo { background: var(--surface-2); aspect-ratio: 1/1; position: relative; overflow: hidden; }
+.sheet-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sheet-photo .placeholder {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  background-image: repeating-linear-gradient(45deg, rgba(0,0,0,.025) 0 10px, transparent 10px 20px),
+    linear-gradient(180deg, #f2f2f4, #ededf0);
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 12px; color: var(--ink-3);
+  letter-spacing: .04em; text-transform: uppercase;
+}
+.sheet-info { padding: 36px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; }
+.sheet-close {
+  position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; border-radius: 50%;
+  background: rgba(255,255,255,.85); backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center; z-index: 2;
+  border: 1px solid var(--hairline);
+}
+.sheet-close:hover { background: #fff; }
+.sheet-info h3 { font-size: 26px; letter-spacing: -.02em; font-weight: 700; line-height: 1.1; }
+.sheet-info .kick { font-size: 11px; color: var(--ink-3); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+.sheet-info .desc { font-size: 14px; color: var(--ink-2); line-height: 1.6; }
+.sheet-info .price { font-size: 22px; font-weight: 600; letter-spacing: -.015em; }
+
+.chip-row { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip {
+  padding: 10px 14px; min-width: 48px; text-align: center;
+  border: 1px solid var(--hairline); border-radius: 12px; font-size: 13px;
+  background: var(--surface-2); transition: all .15s; cursor: pointer;
+}
+.chip:hover { border-color: #c7c7cc; }
+.chip.active { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+.qty-stepper {
+  display: inline-flex; align-items: center; gap: 0; background: var(--surface-2);
+  border: 1px solid var(--hairline); border-radius: 999px; padding: 4px;
+}
+.qty-stepper button {
+  width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; color: var(--ink-2); font-size: 18px; line-height: 1;
+}
+.qty-stepper button:hover { background: #fff; color: var(--ink); }
+.qty-stepper .qty-val { width: 36px; text-align: center; font-weight: 600; font-size: 14px; }
+
+.field-error { color: #c0392b; font-size: 12px; margin-top: 6px; font-weight: 500; display: none; }
+
+/* ===== Bag Drawer ===== */
+.bag-overlay { display: none; position: fixed; inset: 0; z-index: 205; background: rgba(0,0,0,.3); backdrop-filter: blur(4px); }
+.bag-overlay.open { display: block; }
+.bag-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; width: min(420px, 100%);
+  background: #fff; box-shadow: -20px 0 60px -20px rgba(0,0,0,.2);
+  z-index: 210; display: flex; flex-direction: column;
+  transform: translateX(100%); transition: transform .35s cubic-bezier(.2,.7,.2,1);
+}
+.bag-drawer.open { transform: none; }
+.bag-head {
+  padding: 22px 24px 16px; display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--hairline);
+}
+.bag-head h3 { font-size: 20px; letter-spacing: -.015em; font-weight: 600; }
+.bag-head-actions { display: flex; gap: 14px; align-items: center; }
+.bag-head-actions button { font-size: 13px; color: var(--ink-3); }
+.bag-head-actions button:hover { color: var(--ink); }
+.bag-body { flex: 1; overflow-y: auto; padding: 10px 24px 24px; }
+.bag-empty { text-align: center; padding: 60px 24px; color: var(--ink-3); }
+.bag-empty .big { font-size: 16px; color: var(--ink); font-weight: 600; margin: 14px 0 6px; }
+.bag-row {
+  display: grid; grid-template-columns: 52px 1fr auto; gap: 14px;
+  padding: 14px 0; border-bottom: 1px solid var(--hairline); align-items: center;
+}
+.bag-row:last-child { border-bottom: 0; }
+.bag-thumb {
+  width: 52px; height: 52px; border-radius: 10px; background: var(--surface-2);
+  background-image: repeating-linear-gradient(45deg, rgba(0,0,0,.03) 0 6px, transparent 6px 12px);
+  overflow: hidden;
+}
+.bag-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.bag-info .name { font-size: 14px; font-weight: 600; letter-spacing: -.01em; }
+.bag-info .meta { font-size: 12px; color: var(--ink-3); margin-top: 2px; }
+.bag-info .line2 { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+.mini-qty {
+  display: inline-flex; align-items: center; background: var(--surface-2); border-radius: 999px;
+  padding: 2px; border: 1px solid var(--hairline);
+}
+.mini-qty button { width: 22px; height: 22px; font-size: 13px; color: var(--ink-2); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.mini-qty button:hover { background: #fff; color: var(--ink); }
+.mini-qty span { padding: 0 8px; font-size: 13px; font-weight: 600; }
+.bag-rm { font-size: 12px; color: var(--ink-3); }
+.bag-rm:hover { color: #c00; }
+.bag-price { font-size: 14px; font-weight: 600; letter-spacing: -.01em; }
+
+.bag-foot { border-top: 1px solid var(--hairline); padding: 18px 24px 24px; background: var(--bg); }
+.sum-row { display: flex; justify-content: space-between; font-size: 14px; padding: 5px 0; color: var(--ink-2); }
+.sum-row.total { font-size: 18px; font-weight: 700; color: var(--ink); letter-spacing: -.015em; padding-top: 10px; margin-top: 6px; border-top: 1px solid var(--hairline); }
+.fk-block { background: #fff; border: 1px solid var(--hairline); border-radius: var(--radius-md); padding: 14px 16px; margin: 14px 0 6px; }
+.fk-block .q { font-size: 13px; color: var(--ink-2); margin-bottom: 10px; font-weight: 500; }
+.fk-choice { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: var(--surface-2); border-radius: 10px; padding: 3px; }
+.fk-choice button { padding: 8px; border-radius: 8px; font-size: 13px; color: var(--ink-2); transition: all .2s; }
+.fk-choice button.active { background: #fff; color: var(--ink); font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,.05); }
+.fk-error { color: #c0392b; font-size: 12px; margin-top: 8px; font-weight: 500; display: none; }
+
+/* FAB */
+.fab {
+  display: none; position: fixed; right: 22px; bottom: 22px; z-index: 95;
+  background: var(--ink); color: #fff; padding: 14px 20px; border-radius: 999px;
+  align-items: center; gap: 10px; box-shadow: 0 14px 30px -10px rgba(0,0,0,.35);
+  font-size: 13px; font-weight: 500; transition: transform .15s;
+}
+.fab:hover { transform: translateY(-2px); }
+.fab .fab-count { background: var(--accent); padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%) translateY(40px);
+  background: var(--ink); color: #fff; padding: 12px 20px; border-radius: 999px;
+  font-size: 13px; letter-spacing: -.005em; z-index: 400; opacity: 0;
+  transition: opacity .25s, transform .25s; display: inline-flex; align-items: center; gap: 10px;
+  pointer-events: none; white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ===== Responsive ===== */
+@media (max-width: 960px) { .grid { grid-template-columns: repeat(2, 1fr); } .features { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) {
+  .grid { grid-template-columns: 1fr; }
+  .features { grid-template-columns: 1fr 1fr; }
+  .row-2 { grid-template-columns: 1fr; }
+  .onboard { padding: 28px 20px; }
+  .sheet { grid-template-columns: 1fr; max-height: 95vh; overflow-y: auto; }
+  .sheet-photo { aspect-ratio: 4/3; }
+  .pills { gap: 6px; }
+  .pill { padding: 7px 14px; font-size: 12px; }
+  .cat-head h2 { font-size: 28px; }
+  .fab { right: 14px; bottom: 14px; padding: 12px 16px; font-size: 12px; }
+}
+@media (max-width: 480px) {
+  .features { grid-template-columns: 1fr; }
+  .segmented { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- Chrome / Nav -->
+<div class="chrome">
+  <div class="chrome-inner">
+    <div class="brand">
+      <img src="logo.png" alt="Bergwacht Zollernalb" onerror="this.style.display='none'">
+      <span>Bergwacht Zollernalb</span>
+    </div>
+    <div class="chrome-right">
+      <span id="navUser" style="font-size:12px;color:var(--ink-3);display:none;"></span>
+      <button class="bag-trigger" id="navBag" onclick="toggleBag(true)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l-1.2 12.2a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 7z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
+        <span class="bag-count" id="navBagCount" style="display:none;">0</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Hero + Onboard -->
+<section id="heroSection">
+  <section class="hero">
+    <div class="eyebrow">Bestellkatalog &middot; Saison 26</div>
+    <h1>Ausr&uuml;stung, die <span class="grad">mitgeht.</span><br>Made f&uuml;r die Zollernalb.</h1>
+    <p>Kollektionen, Einsatzbekleidung und PSA &mdash; in einem minimalistischen Bestellvorgang.</p>
+  </section>
+
+  <section class="features">
+    <div class="feature"><div class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l8 3v5c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-3z"/></svg></div><div class="txt"><b>EN-zertifizierte PSA</b>Qualit&auml;t f&uuml;r alpine Eins&auml;tze</div></div>
+    <div class="feature"><div class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 16V7a1 1 0 0 1 1-1h10v10"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7.5" cy="17.5" r="2"/><circle cx="17.5" cy="17.5" r="2"/></svg></div><div class="txt"><b>Abholung vor Ort</b>Gesch&auml;ftsstelle Albstadt</div></div>
+    <div class="feature"><div class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="txt"><b>PDF-Bestellung</b>Direkt per Formular absenden</div></div>
+    <div class="feature"><div class="icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 20l6-10 4 6 3-4 5 8H3z"/><circle cx="16" cy="6" r="1.6"/></svg></div><div class="txt"><b>3 Kollektionen</b>BW Zollernalb &middot; Ortovox &middot; Shop</div></div>
+  </section>
+
+  <div class="onboard-wrap">
+    <div class="onboard">
+      <h2>Anmelden</h2>
+      <p class="sub">Dein Name und Ausbildungsstand legen fest, welche Artikel du bestellen kannst.</p>
+      <div class="row-2">
+        <div class="field"><label>Vorname</label><input id="vorname" placeholder="Max"></div>
+        <div class="field"><label>Nachname</label><input id="nachname" placeholder="Mustermann"></div>
+      </div>
+      <div class="field">
+        <label>Ausbildungsstand</label>
+        <div class="segmented" id="segmented">
+          <button class="seg" data-val="einstieg" type="button"><div style="font-weight:600">Einstieg</div><div style="font-size:11px;color:var(--ink-3);margin-top:2px;line-height:1.2">Basisausbildung / Zertifizierung</div></button>
+          <button class="seg" data-val="zertifizierung" type="button"><div style="font-weight:600">Zertifiziert</div><div style="font-size:11px;color:var(--ink-3);margin-top:2px;line-height:1.2">Bestandene Zertifizierung</div></button>
+          <button class="seg" data-val="fachpruefung" type="button"><div style="font-weight:600">Dienstabzeichen</div><div style="font-size:11px;color:var(--ink-3);margin-top:2px;line-height:1.2">Gro&szlig;es Dienstabzeichen</div></button>
+        </div>
+      </div>
+      <button class="btn-primary" id="btnOpen" disabled>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Zum Shop
+      </button>
+
+      <button class="rules-toggle" id="btnRules" type="button">
+        <span>Vergaberegeln ansehen</span>
+        <svg id="rulesChev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="transition:transform .25s"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div id="rulesContent" style="display:none;padding:4px 4px 0;">
+        <table class="rules-table">
+          <thead><tr><th>Kleidungsst&uuml;ck</th><th>Vergabezeitpunkt</th><th>Regelung</th></tr></thead>
+          <tbody>
+            <tr><td>T-Shirt</td><td>Einstieg Basisausbildung / Zertifizierung</td><td>Wird als erstes Teil ausgegeben</td></tr>
+            <tr><td>Einsatzhose (All-Year-Hose)</td><td>Nach Ausbildungszertifizierung oder Eintritt Einsatzgruppe</td><td>Wird als PSA-Kleidung gestellt</td></tr>
+            <tr><td>Softshelljacke (Sommer)</td><td>Zertifizierung &rarr; Pooljacke; Grundlagenpr&uuml;fung &rarr; eigene Jacke</td><td>Pooljacken ohne Namensschild</td></tr>
+            <tr><td>Weitere Einsatzkleidung</td><td>Nach Erhalt des gro&szlig;en Dienstabzeichens und nach jeder weiteren Fachpr&uuml;fung</td><td>Kosten von Bergwacht &uuml;bernommen; definierte Liste</td></tr>
+            <tr><td>Privatkauf Einsatzkleidung</td><td>Nach Erhalt des gro&szlig;en Dienstabzeichens</td><td>Definierte Liste</td></tr>
+            <tr><td>Privatkauf Kollektion BW Zollernalb</td><td>Nach Zertifizierung m&ouml;glich</td><td>&ndash;</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="privacy">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="flex-shrink:0;margin-top:1px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+        <span>Deine Eingaben werden nicht gespeichert oder &uuml;bertragen &mdash; sie dienen ausschlie&szlig;lich der Erstellung deines Bestellformulars als PDF. Die angezeigten Preise stellen kein rechtsverbindliches Angebot dar.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Catalog -->
+<section class="catalog" id="catalogSection">
+  <div class="cat-head">
+    <div class="cat-who">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7"/></svg>
+      Angemeldet als <b id="catUser"></b> &middot; <span id="catLevel"></span>
+    </div>
+    <h2>F&uuml;r dich freigegeben.</h2>
+    <div class="sub">Dein Ausbildungsstand schaltet <b id="catCount">0</b> Artikel frei.</div>
+  </div>
+
+  <div class="pills" id="pillBar">
+    <button class="pill active" data-cat="all">Alle</button>
+    <button class="pill" data-cat="tshirt">Shirts</button>
+    <button class="pill" data-cat="longsleeve">Longsleeves</button>
+    <button class="pill" data-cat="jacke">Jacken &amp; Cardigans</button>
+    <button class="pill" data-cat="hose">Hosen</button>
+    <div class="pill-sep"></div>
+    <button class="pill active" data-col="all">Alle Marken</button>
+    <button class="pill" data-col="Bergwacht Zollernalb">Bergwacht Zollernalb</button>
+    <button class="pill" data-col="Ortovox">Ortovox</button>
+    <button class="pill" data-col="Bergwacht Shop">Bergwacht Shop</button>
+  </div>
+
+  <div class="grid" id="productGrid"></div>
+</section>
+
+<!-- Quick-Look Modal -->
+<div class="backdrop" id="quickModal">
+  <div class="sheet" onclick="event.stopPropagation()">
+    <button class="sheet-close" onclick="closeQuickLook()" aria-label="Schlie&szlig;en"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    <div class="sheet-photo" id="qlPhoto"></div>
+    <div class="sheet-info">
+      <div class="kick" id="qlKick"></div>
+      <h3 id="qlName"></h3>
+      <div class="price" id="qlPrice"></div>
+      <div class="desc" id="qlDesc"></div>
+      <div>
+        <div style="font-size:12px;color:var(--ink-3);margin-bottom:8px;font-weight:500;letter-spacing:.01em">Gr&ouml;&szlig;e</div>
+        <div class="chip-row" id="qlSizes"></div>
+        <div class="field-error" id="qlError">Bitte Gr&ouml;&szlig;e w&auml;hlen</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;margin-top:4px;">
+        <div style="font-size:12px;color:var(--ink-3);font-weight:500">Menge</div>
+        <div class="qty-stepper">
+          <button onclick="qlQty(-1)">&minus;</button>
+          <span class="qty-val" id="qlQty">1</span>
+          <button onclick="qlQty(1)">+</button>
+        </div>
+      </div>
+      <button class="btn-primary btn-accent" style="margin-top:auto" onclick="addFromQuickLook()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 7h12l-1.2 12.2a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 7z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
+        In die Tasche
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Bag Drawer -->
+<div class="bag-overlay" id="bagOverlay" onclick="toggleBag(false)"></div>
+<aside class="bag-drawer" id="bagDrawer">
+  <div class="bag-head">
+    <h3>Deine Tasche</h3>
+    <div class="bag-head-actions">
+      <button onclick="clearCart()" id="bagClearBtn" style="display:none">Leeren</button>
+      <button onclick="toggleBag(false)" aria-label="Schlie&szlig;en"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    </div>
+  </div>
+  <div class="bag-body" id="bagBody"></div>
+  <div class="bag-foot" id="bagFoot" style="display:none">
+    <div class="fk-block">
+      <div class="q">Felsenr&auml;umkonto nutzen?</div>
+      <div class="fk-choice">
+        <button onclick="setFk('ja',this)" name="felsenraeum" data-val="ja">Ja</button>
+        <button onclick="setFk('nein',this)" name="felsenraeum" data-val="nein">Nein</button>
+      </div>
+      <div class="fk-error" id="felsenraeumError">Bitte angeben ob das Felsenr&auml;umkonto genutzt werden soll.</div>
+    </div>
+    <div class="sum-row"><span>Zwischensumme</span><span id="bagSubtotal"></span></div>
+    <div class="sum-row"><span>Abholung</span><span style="color:var(--accent)">kostenlos</span></div>
+    <div class="sum-row total"><span>Gesamt</span><span id="bagTotal"></span></div>
+    <button class="btn-primary btn-accent" style="margin-top:14px" id="btnPdf">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      PDF-Bestellung erstellen
+    </button>
+    <div style="font-size:11px;color:var(--ink-3);text-align:center;margin-top:10px;line-height:1.5">Bestellung an geschaeftsstelle@bergwacht-zollernalb.de</div>
+  </div>
+</aside>
+
+<!-- FAB -->
+<button class="fab" id="fab" onclick="toggleBag(true)">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 7h12l-1.2 12.2a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 7z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg>
+  Tasche ansehen <span class="fab-count" id="fabCount">0</span>
+</button>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===== Products (preserved) ===== */
+const produkte = [
+  { id: 1,  name: "T-Shirt Herren LIGHT", kollektion: "Bergwacht Zollernalb", kategorie: "tshirt", beschreibung: "175 g/m\u00b2, 50% Baumwolle, 50% Polyester.", groessen: ["S","M","L","XL"], geschlechtFix: "Herren", preis: 24.90, bildUrl: "bilder/bergwacht-zollernalb/T-Shirt Herren LIGHT.png" },
+  { id: 2,  name: "T-Shirt Damen LIGHT",  kollektion: "Bergwacht Zollernalb", kategorie: "tshirt", beschreibung: "175 g/m\u00b2, 50% Baumwolle, 50% Polyester.", groessen: ["S","M","L","XL"], geschlechtFix: "Damen", preis: 24.90, bildUrl: "bilder/bergwacht-zollernalb/T-Shirt Damen LIGHT.png" },
+  { id: 3,  name: "T-Shirt Herren PRO",   kollektion: "Bergwacht Zollernalb", kategorie: "tshirt", beschreibung: "210\u2013220 g/m\u00b2, 60% Baumwolle, 40% Polyester.", groessen: ["S","M","L","XL","2XL","3XL"], geschlechtFix: "Herren", preis: 25.90, bildUrl: "bilder/bergwacht-zollernalb/T-Shirt Herren PRO.png" },
+  { id: 4,  name: "T-Shirt Damen PRO",    kollektion: "Bergwacht Zollernalb", kategorie: "tshirt", beschreibung: "210\u2013220 g/m\u00b2, 60% Baumwolle, 40% Polyester.", groessen: ["S","M","L","XL","2XL","3XL"], geschlechtFix: "Damen", preis: 25.90, bildUrl: "bilder/bergwacht-zollernalb/T-Shirt Damen PRO.png" },
+  { id: 5,  name: "Longsleeve UNISEX",    kollektion: "Bergwacht Zollernalb", kategorie: "longsleeve", beschreibung: "60% Baumwolle, 40% Polyester.", groessen: ["S","M","L","XL","2XL","3XL"], geschlechtFix: "Unisex", preis: 30.90, bildUrl: "bilder/bergwacht-zollernalb/Longsleeve UNISEX.png" },
+  { id: 6,  name: "Longsleeve Damen",     kollektion: "Bergwacht Zollernalb", kategorie: "longsleeve", beschreibung: "60% Baumwolle, 40% Polyester, 3/4 Arml\u00e4nge.", groessen: ["S","M","L","XL","2XL","3XL"], geschlechtFix: "Damen", preis: 28.90, bildUrl: "bilder/bergwacht-zollernalb/Longsleeve Damen.png" },
+  { id: 7,  name: "Cardigan Herren",      kollektion: "Bergwacht Zollernalb", kategorie: "jacke", beschreibung: "Fleece-Cardigan, 90% Polyester, 10% Elastan. Dauml\u00f6cher. Als Isolierschicht unter der Jacke geeignet.", groessen: ["S","M","L","XL","2XL","3XL"], geschlechtFix: "Herren", preis: 101.50, bildUrl: "bilder/bergwacht-zollernalb/Cardigan Herren.png" },
+  { id: 8,  name: "Cardigan Damen",       kollektion: "Bergwacht Zollernalb", kategorie: "jacke", beschreibung: "Fleece-Cardigan mit Kapuze, 90% Polyester, 10% Elastan. Dauml\u00f6cher. Als Isolierschicht unter der Jacke geeignet.", groessen: ["S","M","L","XL","2XL","3XL"], geschlechtFix: "Damen", preis: 101.50, bildUrl: "bilder/bergwacht-zollernalb/Cardigan Damen.png" },
+  { id: 9,  name: "Sweater UNISEX",       kollektion: "Bergwacht Zollernalb", kategorie: "longsleeve", beschreibung: "70% Baumwolle, 30% recyceltes Polyester. Zwei Rei\u00dfverschluss-Seitentaschen.", groessen: ["S","M","L","XL","2XL","3XL"], geschlechtFix: "Unisex", preis: 88.00, bildUrl: "bilder/bergwacht-zollernalb/Sweater Unisex.png" },
+  { id: 10, name: "Jacke",         kollektion: "Ortovox",              kategorie: "jacke",   beschreibung: "Wetterfeste Jacke von Ortovox f\u00fcr alpine Eins\u00e4tze.",                    groessen: ["XS","S","M","L","XL","2XL","3XL"], preis: 189.00 },
+  { id: 11, name: "Hose",          kollektion: "Ortovox",              kategorie: "hose",    beschreibung: "Strapazierf\u00e4hige Einsatzhose von Ortovox.",                             groessen: ["XS","S","M","L","XL","2XL","3XL"], preis: 129.00 },
+  { id: 12, name: "T-Shirt",       kollektion: "Ortovox",              kategorie: "tshirt",  beschreibung: "Funktions-T-Shirt aus der Ortovox-Kollektion.",                        groessen: ["XS","S","M","L","XL","2XL","3XL"], preis: 39.00 },
+  { id: 13, name: "All Year Hose", kollektion: "Bergwacht Shop",                  kategorie: "hose",    beschreibung: "Ganzjahres-Einsatzhose aus dem Bergwacht Shop.",                       groessen: ["XS","S","M","L","XL","2XL","3XL"], preis: 99.00 },
+  { id: 14, name: "Jacke",         kollektion: "Bergwacht Shop",                  kategorie: "jacke",   beschreibung: "Einsatzjacke aus dem offiziellen Bergwacht Shop.",                     groessen: ["XS","S","M","L","XL","2XL","3XL"], preis: 149.00 },
+  { id: 15, name: "T-Shirt",       kollektion: "Bergwacht Shop",                  kategorie: "tshirt",  beschreibung: "T-Shirt aus dem offiziellen Bergwacht Shop.",                          groessen: ["XS","S","M","L","XL","2XL","3XL"], preis: 29.00 },
+];
+
+/* ===== State ===== */
+let vorname = "", nachname = "", ausbildung = "";
+let cart = [];
+let bestellbarStatus = [];
+let fkValue = "";
+let filterCat = "all", filterCol = "all";
+let qlProduct = null, qlSize = "", qlQtyVal = 1;
+
+/* ===== Helpers (preserved) ===== */
+function ausbildungLabel() {
+  const m = { einstieg: "Einstieg Basisausbildung", zertifizierung: "Bestandene Zertifizierung", fachpruefung: "Nach Erhalt des gro\u00dfen Dienstabzeichens" };
+  return m[ausbildung] || "";
+}
+function ausbildungLabelFull() {
+  const m = { einstieg: "Einstieg Basisausbildung / Zertifizierung", zertifizierung: "Bestandene Zertifizierung", fachpruefung: "Nach Erhalt des gro\u00dfen Dienstabzeichens" };
+  return m[ausbildung] || "";
+}
+function esc(s) { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+function kolClass(k) { if (k.includes("Zollernalb")) return "zollernalb"; if (k.includes("Ortovox")) return "ortovox"; return "shop"; }
+function dateStr() { const d = new Date(); return String(d.getDate()).padStart(2,"0") + "." + String(d.getMonth()+1).padStart(2,"0") + "." + d.getFullYear(); }
+function fmt(n) { return "\u20AC " + n.toFixed(2).replace(".",","); }
+
+/* ===== Permission rules (preserved) ===== */
+function isAllowed(p) {
+  if (ausbildung === "fachpruefung") return true;
+  if (ausbildung === "zertifizierung") {
+    const istZollernalbTShirt = p.kategorie === "tshirt" && p.kollektion === "Bergwacht Zollernalb";
+    const istAllYearHose = p.name === "All Year Hose" && p.kollektion === "Bergwacht Shop";
+    return istZollernalbTShirt || istAllYearHose;
+  }
+  return p.kategorie === "tshirt" && p.kollektion === "Bergwacht Zollernalb";
+}
+
+/* ===== Toast ===== */
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#6bffb7" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> ' + esc(msg);
+  t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 2200);
+}
+
+/* ===== Segmented Control ===== */
+document.querySelectorAll("#segmented .seg").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll("#segmented .seg").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    ausbildung = btn.dataset.val;
+    checkForm();
+  });
+});
+
+/* ===== Form ===== */
+const $vorname = document.getElementById("vorname");
+const $nachname = document.getElementById("nachname");
+const $btnOpen = document.getElementById("btnOpen");
+function checkForm() { $btnOpen.disabled = !($vorname.value.trim() && $nachname.value.trim() && ausbildung); }
+$vorname.addEventListener("input", checkForm);
+$nachname.addEventListener("input", checkForm);
+
+$btnOpen.addEventListener("click", () => {
+  vorname = $vorname.value.trim();
+  nachname = $nachname.value.trim();
+  document.getElementById("heroSection").style.display = "none";
+  document.getElementById("catalogSection").classList.add("active");
+  document.getElementById("catUser").textContent = vorname + " " + nachname;
+  document.getElementById("catLevel").textContent = ausbildungLabel();
+  document.getElementById("navUser").textContent = vorname;
+  document.getElementById("navUser").style.display = "";
+  renderProducts();
+});
+
+/* ===== Rules accordion ===== */
+document.getElementById("btnRules").addEventListener("click", () => {
+  const c = document.getElementById("rulesContent");
+  const chev = document.getElementById("rulesChev");
+  const open = c.style.display !== "none";
+  c.style.display = open ? "none" : "block";
+  chev.style.transform = open ? "none" : "rotate(180deg)";
+});
+
+/* ===== Filter pills ===== */
+document.getElementById("pillBar").addEventListener("click", e => {
+  const btn = e.target.closest(".pill");
+  if (!btn) return;
+  if (btn.dataset.cat !== undefined) {
+    filterCat = btn.dataset.cat;
+    document.querySelectorAll("[data-cat]").forEach(b => b.classList.toggle("active", b.dataset.cat === filterCat));
+  }
+  if (btn.dataset.col !== undefined) {
+    filterCol = btn.dataset.col;
+    document.querySelectorAll("[data-col]").forEach(b => b.classList.toggle("active", b.dataset.col === filterCol));
+  }
+  renderProducts();
+});
+
+/* ===== Render Products ===== */
+function renderProducts() {
+  const grid = document.getElementById("productGrid");
+  grid.innerHTML = "";
+  const visible = produkte.filter(p => {
+    if (!isAllowed(p)) return false;
+    if (filterCat !== "all" && p.kategorie !== filterCat) return false;
+    if (filterCol !== "all" && p.kollektion !== filterCol) return false;
+    return true;
+  });
+  document.getElementById("catCount").textContent = visible.length;
+
+  if (!visible.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--ink-3);">Keine Artikel f\u00fcr diesen Filter. Probier eine andere Kategorie.</div>';
+    return;
+  }
+
+  visible.forEach(p => {
+    const inBag = cart.some(c => c.produktId === p.id);
+    const gender = p.geschlechtFix || "";
+    const tile = document.createElement("div");
+    tile.className = "tile" + (inBag ? " in-bag" : "");
+    tile.innerHTML = `
+      <div class="thumb">
+        ${p.bildUrl
+          ? '<img src="' + esc(p.bildUrl) + '" alt="' + esc(p.name) + '" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'"><div class="placeholder" style="display:none">' + esc(p.name) + '</div>'
+          : '<div class="placeholder">' + esc(p.name) + (gender ? ' \u00b7 ' + esc(gender) : '') + '</div>'
+        }
+      </div>
+      <div class="tile-body">
+        <div class="tile-kick">${esc(p.kollektion)}</div>
+        <div class="tile-name">${esc(p.name)} ${gender ? '<span class="gender">\u00b7 ' + esc(gender) + '</span>' : ''}</div>
+        <div class="tile-desc">${esc(p.beschreibung)}</div>
+        <div class="tile-price">${fmt(p.preis)}</div>
+        <div class="tile-actions">
+          <button class="tile-quick" data-ql="${p.id}">Details</button>
+          <button class="tile-add" data-ql="${p.id}">+ In Tasche</button>
+        </div>
+      </div>`;
+    grid.appendChild(tile);
+  });
+
+  grid.querySelectorAll("[data-ql]").forEach(btn => {
+    btn.addEventListener("click", () => openQuickLook(Number(btn.dataset.ql)));
+  });
+
+  updateBagUI();
+}
+
+/* ===== Quick Look ===== */
+function openQuickLook(pid) {
+  qlProduct = produkte.find(p => p.id === pid);
+  if (!qlProduct) return;
+  qlSize = ""; qlQtyVal = 1;
+  document.getElementById("qlKick").textContent = qlProduct.kollektion + (qlProduct.geschlechtFix ? " \u00b7 " + qlProduct.geschlechtFix : "");
+  document.getElementById("qlName").textContent = qlProduct.name;
+  document.getElementById("qlPrice").textContent = fmt(qlProduct.preis);
+  document.getElementById("qlDesc").textContent = qlProduct.beschreibung;
+  document.getElementById("qlQty").textContent = "1";
+  document.getElementById("qlError").style.display = "none";
+
+  // Photo
+  const photoEl = document.getElementById("qlPhoto");
+  if (qlProduct.bildUrl) {
+    photoEl.innerHTML = '<img src="' + esc(qlProduct.bildUrl) + '" alt="' + esc(qlProduct.name) + '" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'"><div class="placeholder" style="display:none;position:absolute;inset:0;align-items:center;justify-content:center">' + esc(qlProduct.name) + '</div>';
+  } else {
+    photoEl.innerHTML = '<div class="placeholder">' + esc(qlProduct.name) + '</div>';
+  }
+
+  // Size chips
+  const row = document.getElementById("qlSizes");
+  row.innerHTML = qlProduct.groessen.map(s => '<button class="chip" data-sz="' + s + '">' + s + '</button>').join("");
+  row.querySelectorAll(".chip").forEach(c => {
+    c.addEventListener("click", () => {
+      row.querySelectorAll(".chip").forEach(x => x.classList.remove("active"));
+      c.classList.add("active");
+      qlSize = c.dataset.sz;
+      document.getElementById("qlError").style.display = "none";
+    });
+  });
+
+  document.getElementById("quickModal").classList.add("open");
+}
+function closeQuickLook() { document.getElementById("quickModal").classList.remove("open"); qlProduct = null; }
+document.getElementById("quickModal").addEventListener("click", e => { if (e.target.id === "quickModal") closeQuickLook(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") { closeQuickLook(); toggleBag(false); } });
+function qlQty(d) { qlQtyVal = Math.max(1, qlQtyVal + d); document.getElementById("qlQty").textContent = qlQtyVal; }
+
+function addFromQuickLook() {
+  if (!qlProduct) return;
+  if (!qlSize) { document.getElementById("qlError").style.display = "block"; return; }
+  const geschlecht = qlProduct.geschlechtFix || "\u2013";
+  const dup = cart.find(c => c.produktId === qlProduct.id && c.groesse === qlSize && c.geschlecht === geschlecht);
+  if (dup) { dup.menge += qlQtyVal; } else {
+    cart.push({ produktId: qlProduct.id, name: qlProduct.name, kollektion: qlProduct.kollektion, geschlecht, groesse: qlSize, menge: qlQtyVal, preis: qlProduct.preis });
+  }
+  showToast(qlProduct.name + " \u00b7 " + qlSize + " hinzugef\u00fcgt");
+  closeQuickLook();
+  renderProducts();
+  renderBag();
+}
+
+/* ===== Bag Drawer ===== */
+function toggleBag(open) {
+  document.getElementById("bagDrawer").classList.toggle("open", open);
+  document.getElementById("bagOverlay").classList.toggle("open", open);
+  if (open) renderBag();
+}
+
+function renderBag() {
+  const body = document.getElementById("bagBody");
+  const foot = document.getElementById("bagFoot");
+  const clearBtn = document.getElementById("bagClearBtn");
+  body.innerHTML = "";
+
+  if (!cart.length) {
+    body.innerHTML = '<div class="bag-empty"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--ink-3)" stroke-width="1.4"><path d="M6 7h12l-1.2 12.2a2 2 0 0 1-2 1.8H9.2a2 2 0 0 1-2-1.8L6 7z"/><path d="M9 7V5a3 3 0 0 1 6 0v2"/></svg><div class="big">Deine Tasche ist leer</div><div style="font-size:13px">F\u00fcge Artikel aus dem Katalog hinzu.</div></div>';
+    foot.style.display = "none";
+    clearBtn.style.display = "none";
+    return;
+  }
+
+  foot.style.display = "";
+  clearBtn.style.display = "";
+
+  cart.forEach((c, i) => {
+    const p = produkte.find(x => x.id === c.produktId);
+    const row = document.createElement("div");
+    row.className = "bag-row";
+    row.innerHTML = `
+      <div class="bag-thumb">${p && p.bildUrl ? '<img src="' + esc(p.bildUrl) + '" onerror="this.style.display=\'none\'">' : ''}</div>
+      <div class="bag-info">
+        <div class="name">${esc(c.name)}</div>
+        <div class="meta">${esc(c.kollektion)} \u00b7 ${esc(c.geschlecht)} \u00b7 Gr\u00f6\u00dfe ${esc(c.groesse)}</div>
+        <div class="line2">
+          <div class="mini-qty">
+            <button data-qi="${i}" data-qd="-1">&minus;</button>
+            <span>${c.menge}</span>
+            <button data-qi="${i}" data-qd="1">+</button>
+          </div>
+          <button class="bag-rm" data-ri="${i}">Entfernen</button>
+        </div>
+      </div>
+      <div class="bag-price">${fmt(c.preis * c.menge)}</div>`;
+    body.appendChild(row);
+  });
+
+  body.querySelectorAll("[data-qi]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const i = Number(btn.dataset.qi), d = Number(btn.dataset.qd);
+      cart[i].menge = Math.max(1, cart[i].menge + d);
+      if (cart[i].menge < 1) { cart.splice(i, 1); bestellbarStatus.splice(i, 1); }
+      renderBag(); renderProducts();
+    });
+  });
+  body.querySelectorAll("[data-ri]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const i = Number(btn.dataset.ri);
+      cart.splice(i, 1); bestellbarStatus.splice(i, 1);
+      renderBag(); renderProducts();
+    });
+  });
+
+  const total = cart.reduce((s, c) => s + c.preis * c.menge, 0);
+  document.getElementById("bagSubtotal").textContent = fmt(total);
+  document.getElementById("bagTotal").textContent = fmt(total);
+  updateBagUI();
+}
+
+function clearCart() { cart = []; bestellbarStatus = []; fkValue = ""; document.querySelectorAll(".fk-choice button").forEach(b => b.classList.remove("active")); renderBag(); renderProducts(); }
+
+function setFk(val, btn) {
+  fkValue = val;
+  document.querySelectorAll(".fk-choice button").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById("felsenraeumError").style.display = "none";
+}
+
+function updateBagUI() {
+  const count = cart.reduce((s, c) => s + c.menge, 0);
+  const badge = document.getElementById("navBagCount");
+  const fab = document.getElementById("fab");
+  const fabCount = document.getElementById("fabCount");
+  badge.textContent = count;
+  badge.style.display = count > 0 ? "" : "none";
+  fab.style.display = count > 0 ? "inline-flex" : "none";
+  fabCount.textContent = count;
+}
+
+/* ===== PDF Generation (preserved) ===== */
+document.getElementById("btnPdf").addEventListener("click", async () => {
+  if (!fkValue) {
+    const errEl = document.getElementById("felsenraeumError");
+    errEl.style.display = "block";
+    errEl.scrollIntoView({ behavior: "smooth", block: "center" });
+    return;
+  }
+  const felsenraeum = fkValue;
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit: "mm", format: "a4" });
+  const pw = doc.internal.pageSize.getWidth();
+  const ph = doc.internal.pageSize.getHeight();
+  const ml = 20, mr = 20;
+  let y = 20;
+
+  // Logo per fetch als base64 laden
+  let logoData = null;
+  try {
+    const resp = await fetch("logo.png");
+    const blob = await resp.blob();
+    logoData = await new Promise(res => {
+      const r = new FileReader();
+      r.onload = () => res(r.result);
+      r.readAsDataURL(blob);
+    });
+  } catch(e) { logoData = null; }
+
+  // Header bar
+  doc.setFillColor(0, 120, 75);
+  doc.rect(0, 0, pw, 32, "F");
+  if (logoData) {
+    const img = new Image();
+    img.src = logoData;
+    await new Promise(res => { img.onload = res; });
+    const logoH = 14;
+    const logoW = (img.naturalWidth / img.naturalHeight) * logoH;
+    doc.addImage(logoData, "PNG", ml, (32 - logoH) / 2, logoW, logoH);
+  }
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(16);
+  doc.setFont("helvetica", "bold");
+  doc.text("Bestellkatalog \u2013 Bergwacht Zollernalb", pw / 2, 18, { align: "center" });
+
+  y = 44;
+  doc.setTextColor(30, 30, 30);
+  doc.setFontSize(10);
+  doc.setFont("helvetica", "normal");
+  doc.text("Datum: " + dateStr(), ml, y);
+  y += 8;
+  doc.text("Name: " + vorname + " " + nachname, ml, y);
+  y += 8;
+  doc.text("Ausbildungsstand: " + ausbildungLabelFull(), ml, y);
+  y += 14;
+
+  const cols = [ml, 55, 95, 122, 146, 160, 175];
+  doc.setFillColor(0, 120, 75);
+  doc.rect(ml, y, pw - ml - mr, 10, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(9);
+  doc.setFont("helvetica", "bold");
+  ["Produkt", "Kollektion", "Geschlecht", "Gr\u00f6\u00dfe", "Menge", "Preis", "Bestellt"].forEach((h, i) => doc.text(h, cols[i], y + 4));
+  y += 10;
+
+  doc.setTextColor(30, 30, 30);
+  doc.setFont("helvetica", "normal");
+  cart.forEach(c => {
+    if (y > ph - 30) { doc.addPage(); y = 20; }
+    doc.text(c.name, cols[0], y + 4);
+    doc.text(c.kollektion, cols[1], y + 4);
+    doc.text(c.geschlecht, cols[2], y + 4);
+    doc.text(c.groesse, cols[3], y + 4);
+    doc.text(String(c.menge), cols[4], y + 4);
+    const ep = (c.preis * c.menge).toFixed(2).replace(".", ",");
+    doc.text("EUR " + ep, cols[5], y + 4);
+    doc.setDrawColor(100, 100, 100);
+    doc.setLineWidth(0.4);
+    doc.rect(cols[6] + 8, y + 1, 4, 4);
+    if (bestellbarStatus[cart.indexOf(c)]) {
+      doc.setTextColor(0, 120, 75);
+      doc.setFontSize(8);
+      doc.text("\u2713", cols[6] + 8.5, y + 4.5);
+      doc.setTextColor(30, 30, 30);
+      doc.setFontSize(9);
+    }
+    y += 8;
+    doc.setDrawColor(220, 220, 220);
+    doc.line(ml, y - 1, pw - mr, y - 1);
+  });
+
+  y += 4;
+  const gesamtPDF = cart.reduce((s, c) => s + c.preis * c.menge, 0);
+  doc.setDrawColor(0, 120, 75);
+  doc.setLineWidth(0.5);
+  doc.line(ml, y, pw - mr, y);
+  y += 6;
+  doc.setFillColor(230, 243, 237);
+  doc.rect(ml, y - 5, pw - ml - mr, 11, "F");
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(10);
+  doc.setTextColor(0, 120, 75);
+  doc.text("Gesamtbetrag:", pw - mr - 45, y + 1);
+  doc.text("EUR " + gesamtPDF.toFixed(2).replace(".", ","), pw - mr - 2, y + 1, { align: "right" });
+  y += 12;
+
+  if (y > ph - 130) { doc.addPage(); y = 20; }
+  if (felsenraeum === "ja") {
+    y += 8;
+    doc.setFillColor(0, 120, 75);
+    doc.rect(ml, y, pw - ml - mr, 9, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(9);
+    doc.text("Felsenr\u00e4umkonto wird genutzt", ml + 3, y + 6);
+    y += 16;
+    doc.setTextColor(30, 30, 30);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
+    doc.text("Betrag vom Felsenr\u00e4umkonto (EUR):", ml + 2, y);
+    doc.setDrawColor(100, 100, 100);
+    doc.setLineWidth(0.4);
+    doc.line(ml + 78, y, pw - mr, y);
+    y += 10;
+    doc.text("Verbleibender Betrag zu zahlen (EUR):", ml + 2, y);
+    doc.line(ml + 78, y, pw - mr, y);
+    y += 16;
+    doc.setFillColor(0, 120, 75);
+    doc.rect(ml, y, pw - ml - mr, 9, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(9);
+    doc.text("Auszuf\u00fcllen durch Gesch\u00e4ftsstelle", ml + 3, y + 6);
+    y += 16;
+    doc.setTextColor(30, 30, 30);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
+    doc.text("Bestellt am:", ml + 2, y);
+    doc.line(ml + 35, y, pw - mr, y);
+    y += 10;
+    doc.text("Ausgegeben am:", ml + 2, y);
+    doc.line(ml + 40, y, pw - mr, y);
+    y += 10;
+    doc.text("Zu zahlender Betrag an Mitglied und Kasse \u00fcbermittelt am:", ml + 2, y);
+    doc.line(ml + 120, y, pw - mr, y);
+    y += 16;
+    doc.text("Ort, Datum:", ml + 2, y);
+    doc.line(ml + 25, y, pw / 2 - 5, y);
+    y += 14;
+    doc.line(ml + 2, y, pw / 2 - 5, y);
+    doc.line(pw / 2 + 5, y, pw - mr, y);
+    y += 5;
+    doc.setFontSize(7);
+    doc.setTextColor(100, 100, 100);
+    doc.text("Name Gesch\u00e4ftsstelle", ml + 2, y);
+    doc.text("Unterschrift Gesch\u00e4ftsstelle", pw / 2 + 5, y);
+    y += 12;
+    doc.setFontSize(9);
+    doc.setTextColor(30, 30, 30);
+    doc.line(ml + 2, y, pw / 2 - 5, y);
+    doc.line(pw / 2 + 5, y, pw - mr, y);
+    y += 5;
+    doc.setFontSize(7);
+    doc.setTextColor(100, 100, 100);
+    doc.text("Name Mitglied", ml + 2, y);
+    doc.text("Unterschrift Mitglied", pw / 2 + 5, y);
+    y += 10;
+  } else {
+    y += 8;
+    doc.setFillColor(0, 120, 75);
+    doc.rect(ml, y, pw - ml - mr, 9, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(9);
+    doc.text("Felsenr\u00e4umkonto: Nein", ml + 3, y + 6);
+    y += 16;
+    doc.setTextColor(30, 30, 30);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
+    doc.text("Zu zahlender Betrag (EUR):", ml + 2, y);
+    doc.setDrawColor(100, 100, 100);
+    doc.setLineWidth(0.4);
+    doc.line(ml + 60, y, pw - mr, y);
+    y += 12;
+    doc.setFillColor(0, 120, 75);
+    doc.rect(ml, y, pw - ml - mr, 9, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(9);
+    doc.text("Auszuf\u00fcllen durch Gesch\u00e4ftsstelle", ml + 3, y + 6);
+    y += 16;
+    doc.setTextColor(30, 30, 30);
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(9);
+    doc.text("Bestellt am:", ml + 2, y);
+    doc.line(ml + 35, y, pw - mr, y);
+    y += 10;
+    doc.text("Ausgegeben am:", ml + 2, y);
+    doc.line(ml + 40, y, pw - mr, y);
+    y += 10;
+    doc.text("Zu zahlender Betrag an Mitglied und Kasse \u00fcbermittelt am:", ml + 2, y);
+    doc.line(ml + 120, y, pw - mr, y);
+    y += 16;
+    doc.text("Ort, Datum:", ml + 2, y);
+    doc.line(ml + 25, y, pw / 2 - 5, y);
+    y += 14;
+    doc.line(ml + 2, y, pw / 2 - 5, y);
+    doc.line(pw / 2 + 5, y, pw - mr, y);
+    y += 5;
+    doc.setFontSize(7);
+    doc.setTextColor(100, 100, 100);
+    doc.text("Name Gesch\u00e4ftsstelle", ml + 2, y);
+    doc.text("Unterschrift Gesch\u00e4ftsstelle", pw / 2 + 5, y);
+    y += 12;
+    doc.setFontSize(9);
+    doc.setTextColor(30, 30, 30);
+    doc.line(ml + 2, y, pw / 2 - 5, y);
+    doc.line(pw / 2 + 5, y, pw - mr, y);
+    y += 5;
+    doc.setFontSize(7);
+    doc.setTextColor(100, 100, 100);
+    doc.text("Name Mitglied", ml + 2, y);
+    doc.text("Unterschrift Mitglied", pw / 2 + 5, y);
+    y += 10;
+  }
+
+  // Footer
+  y = ph - 20;
+  doc.setFontSize(9);
+  doc.setTextColor(0, 120, 75);
+  doc.setFont("helvetica", "bold");
+  doc.text("Bestellung bitte senden an: geschaeftsstelle@bergwacht-zollernalb.de", pw / 2, y, { align: "center" });
+  y += 5;
+  doc.setFontSize(7);
+  doc.setTextColor(120, 120, 120);
+  doc.setFont("helvetica", "normal");
+  doc.text("Bergwacht Zollernalb \u2013 DRK Bergwacht W\u00fcrttemberg", pw / 2, y, { align: "center" });
+
+  doc.save("Bestellung_" + vorname + "_" + nachname + "_" + dateStr().replace(/\./g, "-") + ".pdf");
+  showToast("PDF wurde erstellt");
+  toggleBag(false);
+});
+</script>
+</body>
+</html>
